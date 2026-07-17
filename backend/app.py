@@ -8,6 +8,8 @@ from market_agent import market_research
 from finance_agent import finance_analysis
 from marketing_agent import marketing_strategy
 from mentor_agent import mentor_advice
+from pdf_generator import generate_pdf
+from fastapi.responses import FileResponse
 from report_generator import generate_report
 
 app = FastAPI()
@@ -109,3 +111,34 @@ def report(startup_idea: str):
     return {
         "report": final_report
     }
+@app.get("/download-report")
+def download_report(startup_idea: str):
+
+    idea = generate_startup_idea(startup_idea)
+
+    market = market_research(startup_idea)
+
+    business = "Business plan will be generated here"
+
+    finance = finance_analysis(startup_idea)
+
+    marketing = marketing_strategy(startup_idea)
+
+    mentor = mentor_advice(startup_idea)
+
+    report = generate_report(
+        idea,
+        market,
+        business,
+        finance,
+        marketing,
+        mentor
+    )
+
+    pdf = generate_pdf(report)
+
+    return FileResponse(
+        path=pdf,
+        filename="startup_report.pdf",
+        media_type="application/pdf"
+    )
