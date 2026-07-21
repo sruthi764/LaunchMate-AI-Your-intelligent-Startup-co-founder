@@ -1,0 +1,92 @@
+.report-container{
+    max-width:700px;
+    margin:30px auto;
+    padding:20px;
+    font-family:Arial,sans-serif;
+}
+
+.navigation-buttons{
+    margin-bottom:20px;
+}
+
+.back-btn{
+    width:45px;
+    height:45px;
+    border:none;
+    border-radius:50%;
+    background:#5b5bf7;
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.report-container h1{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.top-card{
+    background:linear-gradient(135deg,#9b6bff,#7b6cff);
+    color:white;
+    padding:20px;
+    border-radius:18px;
+    margin-bottom:20px;
+}
+
+.top-card h2{
+    margin-bottom:10px;
+}
+
+.result-card{
+    background:white;
+    border:1px solid #ddd;
+    border-radius:15px;
+    padding:18px;
+    margin-bottom:15px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);
+}
+
+.result-card h3{
+    color:#5b5bf7;
+    margin-bottom:10px;
+}
+
+.result-card p{
+    margin:5px 0;
+}
+
+.button-group{
+    display:flex;
+    gap:15px;
+    margin-top:25px;
+}
+
+.download-btn,
+.print-btn{
+    flex:1;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.download-btn{
+    background:#5b5bf7;
+    color:white;
+}
+
+.print-btn{
+    background:white;
+    color:#5b5bf7;
+    border:2px solid #5b5bf7;
+}
+
+.download-btn:hover{
+    background:#4949e5;
+}
+
+.print-btn:hover{
+    background:#f4f4ff;
+}

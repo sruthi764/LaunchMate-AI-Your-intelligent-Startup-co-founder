@@ -1,13 +1,9 @@
 import os
 from dotenv import load_dotenv
-import google.generativeai as genai
+from google import genai
 
 load_dotenv()
-
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-
-model = genai.GenerativeModel("gemini-2.5-flash")
-
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 def finance_analysis(startup_idea):
 
     prompt = f"""
@@ -28,6 +24,9 @@ Startup Idea:
 {startup_idea}
 """
 
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-flash-latest",
+        contents=prompt,
+    )
 
     return response.text

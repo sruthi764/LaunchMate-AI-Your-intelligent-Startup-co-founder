@@ -1,31 +1,31 @@
+from google import genai
 import os
 from dotenv import load_dotenv
-from google import genai
 
 load_dotenv()
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
-def market_research(startup_idea):
+def business_plan(startup_idea):
     prompt = f"""
-You are a market research expert.
+Create a professional business plan for this startup:
 
-Analyze this startup idea:
-
+Startup Idea:
 {startup_idea}
 
 Include:
-1. Target Customers
-2. Competitors
-3. Market Size
-4. Market Demand
-5. SWOT Analysis
-6. Growth Opportunities
+1. Executive Summary
+2. Business Model
+3. Revenue Model
+4. Target Customers
+5. Growth Strategy
+6. Risks
+7. Future Scope
 """
 
     response = client.models.generate_content(
         model="gemini-flash-latest",
-        contents=prompt,
+        contents=prompt
     )
 
     return response.text
