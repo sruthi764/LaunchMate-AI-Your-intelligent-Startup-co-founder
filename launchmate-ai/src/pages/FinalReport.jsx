@@ -4,9 +4,89 @@ import { useNavigate } from "react-router-dom";
 function FinalReport() {
   const navigate = useNavigate();
 
+  const report = `
+==============================
+      LAUNCHMATE AI REPORT
+==============================
+
+1. Startup Summary
+AI Study Planner
+Education
+Freemium
+
+2. Market Research
+High Demand
+Students
+
+3. Business Plan
+Subscription Model
+Premium Plan
+
+4. Finance
+₹2,50,000
+Break-even: 8 Months
+
+5. Marketing Strategy
+Instagram
+YouTube
+
+6. Legal & Compliance
+GST Registration
+MSME Registration
+
+7. AI Mentor Advice
+Start with student community.
+Focus on low-cost marketing.
+
+==============================
+       END OF REPORT
+==============================
+`;
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/download-report",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            report: report,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        alert("Failed to generate PDF");
+        return;
+      }
+
+      const blob = await response.blob();
+
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "startup_report.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error(error);
+      alert("Download failed");
+    }
+  };
+
   return (
     <div className="report-container">
-
       <div className="navigation-buttons">
         <button
           className="back-btn"
@@ -71,15 +151,20 @@ function FinalReport() {
       </div>
 
       <div className="button-group">
-        <button className="download-btn">
+        <button
+          className="download-btn"
+          onClick={handleDownload}
+        >
           ⬇ Download PDF
         </button>
 
-        <button className="print-btn">
+        <button
+          className="print-btn"
+          onClick={handlePrint}
+        >
           🖨 Print Report
         </button>
       </div>
-
     </div>
   );
 }

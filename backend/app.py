@@ -1,5 +1,5 @@
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI
+from fastapi import FastAPI,Body
 from fastapi.responses import FileResponse
 
 from agent import ask_gemini
@@ -168,34 +168,21 @@ def report(startup_idea: str):
         }
 
 
-@app.get("/download-report")
-def download_report(startup_idea: str):
+@app.post("/download-report")
+async def download_report(data: dict = Body(...)):
     try:
-        idea = generate_startup_idea(startup_idea)
-        market = market_research(startup_idea)
-        business = business_plan(startup_idea)
-        finance = finance_analysis(startup_idea)
-        marketing = marketing_strategy(startup_idea)
-        mentor = mentor_advice(startup_idea)
+        report = data.get("report")
 
-        report = generate_report(
-            idea,
-            market,
-            business,
-            finance,
-            marketing,
-            mentor
-        )
+        if not report:
+            return {"error": "Report content is missing"}
 
-        pdf = generate_pdf(report)
+        pdf_file = generate_pdf(report)
 
         return FileResponse(
-            path=pdf,
+            path=pdf_file,
             filename="startup_report.pdf",
             media_type="application/pdf"
         )
 
     except Exception as e:
-        return {
-            "error": str(e)
-        }
+        return {"error": str(e)}
